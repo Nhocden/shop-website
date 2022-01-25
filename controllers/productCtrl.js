@@ -46,6 +46,15 @@ class APIfeatures {
 }
 
 const productCtrl = {
+    getAllProducts: async(req, res) =>{
+        try {
+            const products = await Products.find()
+            res.json(products)
+            
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
     getProducts: async(req, res) =>{
         try {
             const features = new APIfeatures(Products.find(), req.query)

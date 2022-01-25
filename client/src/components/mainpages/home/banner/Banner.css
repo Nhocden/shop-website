@@ -1,0 +1,49 @@
+.banner-wrap {
+    padding: 30px 120px;
+}
+
+.gutter-row{
+    background-color: blue;
+    height: 700px;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    text-transform: uppercase;
+    flex-direction: column;
+    color: white;
+}
+
+.banner-image1{
+    background-image: url('../../../../Images/banners/sweater.jpg');
+}
+
+.banner-image2{
+    background-image: url('../../../../Images/banners/banner11.jpg');
+}
+
+.gutter-row h1{
+    color: white;
+    font-weight: 700;
+    letter-spacing: 5px;
+    font-size: 40px;
+}
+
+.gutter-row h3{
+    color: white;
+    font-weight: 400;
+}
+
+.gutter-row button{
+    color: white;
+    font-size: 15px;
+    text-transform: uppercase;
+    border-bottom: 1px solid white;
+    padding: 5px 25px;
+    margin-top: 10px;
+}
+
+.gutter-row button:hover{
+    color:black;
+    background-color: white;
+    border-radius: 5px;
+}

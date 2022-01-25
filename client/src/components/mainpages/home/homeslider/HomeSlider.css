@@ -1,0 +1,26 @@
+.slider-title{
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.slider-content{
+    color: white;
+    font-size: 80px;
+    letter-spacing: .2em;
+    font-weight: 600;
+}
+
+.slider-button{
+    color: white !important;
+    text-transform: uppercase;
+    background-color: transparent !important;
+    border: 2px solid white !important;
+    padding: 10px 20px 30px !important;
+    justify-content: center;
+}
+
+.slider-button:hover {
+    color:rgb(141, 121, 5) !important;
+    background-color: white !important;
+}

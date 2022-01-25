@@ -1,0 +1,42 @@
+.collections-wrap{
+    margin-top:50px;
+    padding: 0px 120px;
+}
+
+.collections-wrap h1{
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 700;
+}
+
+.ant-tabs-nav-wrap{
+    border-bottom: 1px solid white !important;
+}
+
+.ant-tabs-tab{
+    color:rgb(190, 187, 187) !important;
+    text-transform: uppercase;
+    font-size: 16px !important;
+}
+
+.ant-tabs-content{
+    padding:30px 0px;
+}
+
+/* -----------------collection--------------------- */
+.button-collection{
+    line-height: 520px !important;
+    font-size: 30px;
+}
+
+.button-collection span:hover{
+    color: #1890ff;
+}
+
+.-right{
+    margin-left: 10px;
+}
+
+.-left{
+    margin-right: 10px;
+}

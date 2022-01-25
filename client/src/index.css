@@ -14,11 +14,9 @@ code {
     monospace;
 }
 .App{
-  max-width: 1230px;
   min-height: 100vh;
   margin: 0 auto;
-  padding: 0 20px;
-  box-shadow: 0 0 35px #eee;
+  /* box-shadow: 0 0 35px rgb(243, 10, 10); */
 }
 a{
   text-decoration: none;
@@ -36,6 +34,9 @@ button{
 /* ---------------- Header ------------ */
 @import url("./components/headers/header.css");
 
+/* ---------------- Footer ------------
+@import url("./components/headers/header.css"); */
+
 /* ------------- Products -------------- */
 
 @import url("./components/mainpages/products/products.css");
@@ -46,8 +47,8 @@ button{
 /* ------------- Login/Register ----------------- */
 @import url("./components/mainpages/auth/login.css");
 
-/* ------------ Cart ------------------- */
-@import url("./components/mainpages/cart/cart.css");
+/* ------------ Checkout ------------------- */
+@import url("./components/mainpages/checkout/cart.css");
 
 /* --------------- History ------------------- */
 @import url("./components/mainpages/history/history.css");
@@ -58,8 +59,11 @@ button{
 /* ------------------- Create Product -------------- */
 @import url("./components/mainpages/createProduct/createProduct.css");
 
-/* ----------------- Responsive ------------------ */
-@media (max-width: 820px){
+/* ------------------- HomeSlider -------------- */
+@import url("./components/mainpages/home/homeslider/HomeSlider.css");
+
+/*----------------- Responsive ------------------ */
+ @media (max-width: 820px){
   header .logo{
     min-width: 115px;
     flex: none;
@@ -133,3 +137,4 @@ button{
     margin: 20px 0;
   }
 }
+

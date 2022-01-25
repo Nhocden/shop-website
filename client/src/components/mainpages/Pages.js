@@ -1,12 +1,13 @@
 import React, {useContext} from 'react'
 import {Switch, Route} from 'react-router-dom'
 import Products from './products/Products'
+import Home from './home/Home'
 import DetailProduct from './detailProduct/DetailProduct'
 import Login from './auth/Login'
 import Register from './auth/Register'
 import OrderHistory from './history/OrderHistory'
 import OrderDetails from './history/OrderDetails'
-import Cart from './cart/Cart'
+import Checkout from './checkout/Checkout'
 import NotFound from './utils/not_found/NotFound'
 import Categories from './categories/Categories'
 import CreateProduct from './createProduct/CreateProduct'
@@ -21,8 +22,10 @@ function Pages() {
 
 
     return (
+        <div >
         <Switch>
-            <Route path="/" exact component={Products} />
+            <Route path="/" exact component={Home} />
+            <Route path="/shop" exact component={Products} />
             <Route path="/detail/:id" exact component={DetailProduct} />
 
             <Route path="/login" exact component={isLogged ? NotFound : Login} />
@@ -35,11 +38,12 @@ function Pages() {
             <Route path="/history" exact component={isLogged ? OrderHistory : NotFound} />
             <Route path="/history/:id" exact component={isLogged ? OrderDetails : NotFound} />
 
-            <Route path="/cart" exact component={Cart} />
+            <Route path="/checkout" exact component={Checkout} />
 
 
             <Route path="*" exact component={NotFound} />
         </Switch>
+        </div>
     )
 }
 

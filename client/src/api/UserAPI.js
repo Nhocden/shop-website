@@ -3,6 +3,7 @@ import axios from 'axios'
 
 function UserAPI(token) {
     const [isLogged, setIsLogged] = useState(false)
+    const [userInfo, setUserInfo] = useState(false)
     const [isAdmin, setIsAdmin] = useState(false)
     const [cart, setCart] = useState([])
     const [history, setHistory] = useState([])
@@ -18,6 +19,7 @@ function UserAPI(token) {
                     setIsLogged(true)
                     res.data.role === 1 ? setIsAdmin(true) : setIsAdmin(false)
 
+                    setUserInfo(res.data)
                     setCart(res.data.cart)
 
                 } catch (err) {
@@ -56,7 +58,8 @@ function UserAPI(token) {
         isAdmin: [isAdmin, setIsAdmin],
         cart: [cart, setCart],
         addCart: addCart,
-        history: [history, setHistory]
+        history: [history, setHistory],
+        userInfo: [userInfo, setUserInfo]
     }
 }
 

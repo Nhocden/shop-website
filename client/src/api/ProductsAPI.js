@@ -4,6 +4,7 @@ import axios from 'axios'
 
 function ProductsAPI() {
     const [products, setProducts] = useState([])
+    const [allProducts, setAllProducts] = useState([])
     const [callback, setCallback] = useState(false)
     const [category, setCategory] = useState('')
     const [sort, setSort] = useState('')
@@ -19,9 +20,18 @@ function ProductsAPI() {
         }
         getProducts()
     },[callback, category, sort, search, page])
+
+    useEffect(() =>{
+        const getAllProducts = async () => {
+            const res_all = await axios.get(`/api/allproducts`)
+            setAllProducts(res_all.data)
+        }
+        getAllProducts()
+    },[])
     
     return {
         products: [products, setProducts],
+        allProducts: [allProducts, setAllProducts],
         callback: [callback, setCallback],
         category: [category, setCategory],
         sort: [sort, setSort],
