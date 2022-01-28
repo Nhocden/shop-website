@@ -22,6 +22,22 @@ const userSchema = new mongoose.Schema({
     cart: {
         type: Array,
         default: []
+    },
+    gender:{
+        type: String,
+        default:"",
+    },
+    phone:{
+        type: String,
+        default:""
+    },
+    birthday:{
+        type: String,
+        default:""
+    },
+    avatar: {
+        type: String,
+        default: "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
     }
 }, {
     timestamps: true

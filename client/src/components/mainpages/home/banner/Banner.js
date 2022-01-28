@@ -12,14 +12,14 @@ export default function Banner() {
           <div className="gutter-row banner-image1">
             <h3 >New in</h3>
             <h1>sweater</h1>
-            <Link to="/shop/sweater"><button>shop now</button></Link> 
+            <Link to="/shop/category/sweater"><button>shop now</button></Link> 
           </div>
         </Col>
         <Col span={12}>
           <div className="gutter-row banner-image2">
             <h3>New in</h3>
             <h1>shoes</h1>
-            <Link to="/shop/shoes"><button>shop now</button></Link>
+            <Link to="/shop/category/shoes"><button>shop now</button></Link>
           </div>
         </Col>
       </Row>

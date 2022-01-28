@@ -1,6 +1,5 @@
 .history-page{
     overflow-x: auto;
-    padding: 30px 120px;
 }
 .history-page h2, h4{
     text-align: center;
@@ -35,23 +34,4 @@ table a{
     float:left;
     width: 100%;
     left:0;
-}
-
-.step-order{
-    padding: 0px 120px 80px;
-    display: flex;
-    /* justify-items: center; */
-}
-
-.ant-result{
-    padding: 0px 32px 50px !important;
-}
-
-.mess-no-order{
-    text-align: center;
-    font-size: 40px;
-}
-
-.mess-no-order p{
-    margin-bottom: 0px !important;
 }

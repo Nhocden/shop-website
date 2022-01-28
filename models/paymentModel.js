@@ -14,10 +14,6 @@ const paymentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    paymentID:{
-        type: String,
-        required: true
-    },
     address:{
         type: Object,
         required: true
@@ -27,8 +23,12 @@ const paymentSchema = new mongoose.Schema({
         default: []
     },
     status:{
-        type: Boolean,
-        default: false
+        type: Number,
+        default: 0
+    },
+    total:{
+        type: Number,
+        default: 0
     }
 }, {
     timestamps: true

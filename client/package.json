@@ -10,6 +10,7 @@
     "@trendyol-js/react-carousel": "^2.0.1",
     "antd": "^4.18.3",
     "axios": "^0.20.0",
+    "moment": "^2.29.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-owl-carousel": "^2.3.3",

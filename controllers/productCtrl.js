@@ -113,6 +113,18 @@ const productCtrl = {
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
+    },
+    createComment: async(req, res) =>{
+        try {
+            console.log("input")
+            await Products.findOneAndUpdate({_id: req.params.id}, {
+                comments: req.body.comments
+            })
+
+            res.json({msg: "Updated a Product"})
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
     }
 }
 

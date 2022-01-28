@@ -1,67 +1,72 @@
-import {useState, useEffect} from 'react'
-import axios from 'axios'
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { message } from "antd";
 
 function UserAPI(token) {
-    const [isLogged, setIsLogged] = useState(false)
-    const [userInfo, setUserInfo] = useState(false)
-    const [isAdmin, setIsAdmin] = useState(false)
-    const [cart, setCart] = useState([])
-    const [history, setHistory] = useState([])
+  const [isLogged, setIsLogged] = useState(false);
+  const [userInfo, setUserInfo] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [cart, setCart] = useState([]);
+  const [history, setHistory] = useState([]);
 
-    useEffect(() =>{
-        if(token){
-            const getUser = async () =>{
-                try {
-                    const res = await axios.get('/user/infor', {
-                        headers: {Authorization: token}
-                    })
+  useEffect(() => {
+    if (token) {
+      const getUser = async () => {
+        try {
+          const res = await axios.get("/user/infor", {
+            headers: { Authorization: token },
+          });
 
-                    setIsLogged(true)
-                    res.data.role === 1 ? setIsAdmin(true) : setIsAdmin(false)
+          setIsLogged(true);
+          res.data.role === 1 ? setIsAdmin(true) : setIsAdmin(false);
 
-                    setUserInfo(res.data)
-                    setCart(res.data.cart)
-
-                } catch (err) {
-                    alert(err.response.data.msg)
-                }
-            }
-
-            getUser()
-            
+          setUserInfo(res.data);
+          setCart(res.data.cart);
+        } catch (err) {
+          alert(err);
         }
-    },[token])
+      };
 
-    
+      getUser();
+    }
+  }, [token]);
 
-    const addCart = async (product) => {
-        if(!isLogged) return alert("Please login to continue buying")
+  const addCart = async (product, quantity = 1, size = "M") => {
+    if (!isLogged) return alert("Please login to continue buying");
 
-        const check = cart.every(item =>{
-            return item._id !== product._id
-        })
+    console.log("quantity", quantity, "size", size)
 
-        if(check){
-            setCart([...cart, {...product, quantity: 1}])
+    const exitsProduct = cart.find((item) => {
+      return item._id === product._id && item.size === size;
+    });
 
-            await axios.patch('/user/addcart', {cart: [...cart, {...product, quantity: 1}]}, {
-                headers: {Authorization: token}
-            })
-
-        }else{
-            alert("This product has been added to cart.")
-        }
+    if (exitsProduct) {
+      exitsProduct.quantity += quantity
+      
+    } else {
+      cart.push({ ...product, quantity: quantity, size: size });
     }
 
-    return {
-        isLogged: [isLogged, setIsLogged],
-        isAdmin: [isAdmin, setIsAdmin],
-        cart: [cart, setCart],
-        addCart: addCart,
-        history: [history, setHistory],
-        userInfo: [userInfo, setUserInfo]
-    }
+    setCart([...cart]);
+
+    message.success("add product to cart success");
+    await axios.patch(
+      "/user/addcart",
+      { cart: [...cart] },
+      {
+        headers: { Authorization: token },
+      }
+    );
+  };
+
+  return {
+    isLogged: [isLogged, setIsLogged],
+    isAdmin: [isAdmin, setIsAdmin],
+    cart: [cart, setCart],
+    addCart: addCart,
+    history: [history, setHistory],
+    userInfo: [userInfo, setUserInfo],
+  };
 }
 
-export default UserAPI
- 
+export default UserAPI;

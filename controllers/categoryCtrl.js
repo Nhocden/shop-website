@@ -26,6 +26,18 @@ const categoryCtrl = {
             return res.status(500).json({msg: err.message})
         }
     },
+    getProductsFromCategory: async(req, res) =>{
+        try {
+            const categories = await Category.findOne({name: req.params.id})
+            if (categories){
+                // const products = await Products.find({category: categories._id})
+                res.json(categories)
+            }
+            else res.json({})
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
     deleteCategory: async(req, res) =>{
         try {
             const products = await Products.findOne({category: req.params.id})

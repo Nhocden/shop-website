@@ -34,10 +34,6 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    checked:{
-        type: Boolean,
-        default: false
-    },
     sold:{
         type: Number,
         default: 0
@@ -47,7 +43,8 @@ const productSchema = new mongoose.Schema({
         default: 5
     },
     comments:{
-        type: Object
+        type: Object,
+        default:[]
     },
 }, {
     timestamps: true //important
