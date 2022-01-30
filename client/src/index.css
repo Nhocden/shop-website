@@ -31,10 +31,6 @@ button{
   cursor: pointer;
 }
 
-.input{
-  
-}
-
 /* ---------------- Header ------------ */
 @import url("./components/headers/header.css");
 

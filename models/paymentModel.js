@@ -16,7 +16,7 @@ const paymentSchema = new mongoose.Schema({
     },
     address:{
         type: Object,
-        required: true
+        default: {}
     },
     cart:{
         type: Array,
@@ -25,6 +25,9 @@ const paymentSchema = new mongoose.Schema({
     status:{
         type: Number,
         default: 0
+    },
+    state:{
+        type: Object,
     },
     total:{
         type: Number,

@@ -126,8 +126,18 @@ function UserOrderDetails() {
             <div className="total-title">
               <h2>CART TOTALS</h2>
             </div>
-            <Row className="row-shipping">
-              <Col span={8}>Shipping:</Col>
+            <Row className="row-phone">
+              <Col span={8}>Phone<span className="span-colon">:</span></Col>
+              <Col span={16}>
+                <p>
+                  {orderDetails.address
+                    ? orderDetails.address.phone
+                    : null}
+                </p>
+              </Col>
+            </Row>
+            <Row className="row-shipping1">
+              <Col span={8}>Shipping <span className="span-colon">:</span></Col>
               <Col span={16}>
                 <p>
                   {orderDetails.address

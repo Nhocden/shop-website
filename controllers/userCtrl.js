@@ -101,6 +101,15 @@ const userCtrl = {
             return res.status(500).json({msg: err.message})
         }
     },
+    updateProfile: async (req, res) =>{
+        try {
+            const userInfo = req.body.user
+            await Users.findOneAndUpdate({_id: req.user.id}, userInfo )
+            res.json({msg: "Updated profile success"})
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
     addCart: async (req, res) =>{
         try {
             const user = await Users.findById(req.user.id)
@@ -117,7 +126,6 @@ const userCtrl = {
     },
     history: async(req, res) =>{
         try {
-            console.log("vafo")
             const history = await Payments.find({user_id: req.user.id})
 
             res.json(history)

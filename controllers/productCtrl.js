@@ -116,7 +116,6 @@ const productCtrl = {
     },
     createComment: async(req, res) =>{
         try {
-            console.log("input")
             await Products.findOneAndUpdate({_id: req.params.id}, {
                 comments: req.body.comments
             })

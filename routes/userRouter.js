@@ -12,12 +12,11 @@ router.get('/refresh_token', userCtrl.refreshToken)
 
 router.get('/infor', auth,  userCtrl.getUser)
 
+router.patch('/update', auth,  userCtrl.updateProfile)
+
 router.patch('/addcart', auth, userCtrl.addCart)
 
 router.get('/history', auth, userCtrl.history)
-
-// router.route('/history/:id')
-//     .get(auth, userCtrl.historyDetail)
 
 router.get('/history/:id', auth, userCtrl.historyDetail)
 

@@ -4,21 +4,28 @@ import { GlobalState } from "../../../GlobalState";
 import axios from "axios";
 // import PaypalButton from "./PaypalButton";
 import { Row, Col } from "antd";
-import { Table} from "antd";
+import { Table } from "antd";
 import { Button } from "antd";
-import { Input } from "antd";
 import { Breadcrumb } from "antd";
-import { message} from 'antd';
-import { useHistory } from 'react-router-dom';
+import { message } from "antd";
+import { useHistory } from "react-router-dom";
+import { Result } from "antd";
+import { Form, Input } from "antd";
 
 function Cart() {
   const history = useHistory();
   const state = useContext(GlobalState);
   const [cart, setCart] = state.userAPI.cart;
+  const [userInfo] = state.userAPI.userInfo;
   const [token] = state.token;
   const [total, setTotal] = useState(0);
-  const [city, setCity] = useState("");
-  const [addressName, setAddressName] = useState("");
+  const [address, setAddress] = useState({
+    addressName: "",
+    city: "",
+    phone: "",
+  });
+  console.log("userInfo", userInfo);
+  console.log("address", address);
 
   const columns = [
     {
@@ -28,7 +35,10 @@ function Cart() {
       align: "left",
       render: (images, record) => (
         <div>
-          <Link to={`/detail/${record._id}`}><img src={images.url} alt="" className="checkout-image" /> <span style={{marginLeft:20}}>{record.title}</span></Link> 
+          <Link to={`/detail/${record._id}`}>
+            <img src={images.url} alt="" className="checkout-image" />{" "}
+            <span style={{ marginLeft: 20 }}>{record.title}</span>
+          </Link>
         </div>
       ),
     },
@@ -79,9 +89,7 @@ function Cart() {
       dataIndex: "price",
       key: "price",
       align: "left",
-      render: (text, product) => (
-        <div>{product.price * product.quantity}</div>
-      ),
+      render: (text, product) => <div>{product.price * product.quantity}</div>,
     },
   ];
 
@@ -92,6 +100,7 @@ function Cart() {
       }, 0);
 
       setTotal(total);
+      if (userInfo.address) setAddress(...userInfo.address);
     };
 
     getTotal();
@@ -142,12 +151,12 @@ function Cart() {
     }
   };
 
-  const HandleChangeCity = (e) => {
-    setCity(e.target.value);
-  };
+  const HandleChange = (e) => {
+    console.log(e.target.value, e.target.name);
+    const name = e.target.name;
+    const value = e.target.value;
 
-  const HandleChangeAddressName = (e) => {
-    setAddressName(e.target.value);
+    setAddress({ ...address, name: value });
   };
 
   // const tranSuccess = async (payment) => {
@@ -166,9 +175,8 @@ function Cart() {
   //   alert("You have successfully placed an order.");
   // };
 
-  const Cash_on_Delivery = async () => {
-    const address = { addressName: addressName, city: city };
-    console.log({ cart, address, total });
+  const Cash_on_Delivery = async (address) => {
+    setAddress(address)
     const res = await axios.post(
       "/api/payment",
       { cart, address, total },
@@ -179,14 +187,37 @@ function Cart() {
 
     setCart([]);
     addToCart([]);
-    message.success('Order Success !!');
+    message.success("Order Success !!");
     history.push(`/order/${res.data._id}`);
-
   };
 
   if (cart.length === 0)
     return (
-      <h2 style={{ textAlign: "center", fontSize: "5rem" }}>Cart Empty</h2>
+      <div className="checkout-wrap">
+        <Breadcrumb className="Breadcrumb">
+          <Breadcrumb.Item>
+            <Link to="/">Home</Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>Check out</Breadcrumb.Item>
+        </Breadcrumb>
+        <div className="cart-empty">
+          <Result
+            icon={
+              <img
+                className="cart-empty-image"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSnLrK6ZKKqBnuCbsSveh5j2UKv3enaV74MQ&usqp=CAU"
+                alt="img"
+              />
+            }
+            title={<i>Your shopping cart is empty. Discover more products !</i>}
+            extra={
+              <Link to="/shop">
+                <Button type="primary">Continue shopping</Button>
+              </Link>
+            }
+          />
+        </div>
+      </div>
     );
 
   return (
@@ -200,6 +231,7 @@ function Cart() {
       <Row gutter={20}>
         <Col span={16}>
           <Table
+            rowKey="_id"
             columns={columns}
             dataSource={cart}
             pagination={false}
@@ -211,40 +243,65 @@ function Cart() {
             <div className="total-title">
               <h2>CART TOTALS</h2>
             </div>
-            <Row className="row-shipping">
-              <Col span={8}>Shipping:</Col>
-              <Col span={16}>
-                <Input
-                  placeholder="input city"
-                  className="input-address"
-                  name="city"
-                  onChange={HandleChangeCity}
-                  value={city}
-                />
-                <Input
-                  placeholder="input address"
-                  className="input-address"
-                  name="addressName"
-                  value={addressName}
-                  onChange={HandleChangeAddressName}
-                />
-              </Col>
-            </Row>
             <Row className="row-total">
               <Col span={8}>Total:</Col>
               <Col span={16} style={{ color: "red" }}>
                 $ {total}
               </Col>
             </Row>
-            {/* <PaypalButton total={total} tranSuccess={tranSuccess} /> */}
-            <Button
-              type="primary"
-              block
-              className="button-order"
-              onClick={Cash_on_Delivery}
+
+            <p>Shipping</p>
+
+            <Form
+              name="basic"
+              labelCol={{ span: 8 }}
+              wrapperCol={{ span: 16 }}
+              initialValues={{ remember: true }}
+              onFinish={Cash_on_Delivery}
+              autoComplete="off"
+              colon={false}
+              // labelAlign="left"
             >
-              Cash on Delivery
-            </Button>
+              <Form.Item
+                label="Phone"
+                name="phone"
+                rules={[
+                  { required: true, message: "Please input your phone!" },
+                ]}
+              >
+                <Input placehoder="input your phone" value={address.phone}/>
+              </Form.Item>
+
+              <Form.Item
+                label="Address"
+                name="addressName"
+                rules={[
+                  { required: true, message: "Please input your address!" },
+                ]}
+              >
+                <Input placehoder="input your address" value={address.addressName}/>
+              </Form.Item>
+
+              <Form.Item
+                label="City"
+                name="city"
+                rules={[
+                  { required: true, message: "Please input your city!" },
+                ]}
+              >
+                <Input size="small" placehoder="input your city" value={address.city}/>
+              </Form.Item>
+
+              <div className="diot-checkout"></div>
+
+              <Form.Item wrapperCol={{ span: 24 }}>
+                <Button type="primary" htmlType="submit" block>
+                  Submit
+                </Button>
+              </Form.Item>
+            </Form>
+
+            {/* <PaypalButton total={total} tranSuccess={tranSuccess} /> */}
           </div>
         </Col>
       </Row>
