@@ -24,6 +24,7 @@ const { Option } = AutoComplete;
 function Header() {
   const state = useContext(GlobalState);
   const [isLogged] = state.userAPI.isLogged;
+  const [isAdmin] = state.userAPI.isAdmin;
   const [userInfo] = state.userAPI.userInfo;
   const [search, setSearch] = state.productsAPI.search;
   const [category, setCategory] = state.productsAPI.category;
@@ -66,6 +67,9 @@ function Header() {
       <Menu.Item>
         <Link to="/order">Orders</Link>
       </Menu.Item>
+      {isAdmin ? <Menu.Item>
+        <Link to="/admin">product management</Link>
+      </Menu.Item>:null}
       <Menu.Item>
         <Link to="/" onClick={logoutUser}>
           Logout
@@ -118,7 +122,6 @@ function Header() {
               <span className="account">
                 <Avatar
                   src={userInfo.avatar}
-                  icon={<UserOutlined />}
                   size={25}
                 />
                 <span style={{ marginLeft: 10 }}>{userInfo.name}</span>

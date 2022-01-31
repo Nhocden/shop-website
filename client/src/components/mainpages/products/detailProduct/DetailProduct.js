@@ -14,6 +14,8 @@ import { Input } from "antd";
 import { message } from "antd";
 import { Carousel } from "@trendyol-js/react-carousel";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
+import Header from "../../../headers/Header";
+import Footer from "../../../footers/Footer";
 
 const { TextArea } = Input;
 
@@ -129,186 +131,192 @@ function DetailProduct() {
 
   return (
     <div>
-      <div className="checkout-wrap">
-        <Breadcrumb className="Breadcrumb">
-          <Breadcrumb.Item>
-            <Link to="/">Home</Link>
-          </Breadcrumb.Item>
-          <Breadcrumb.Item>
-            <Link to="/shop">Shop</Link>
-          </Breadcrumb.Item>
-          <Breadcrumb.Item>Product Detail</Breadcrumb.Item>
-        </Breadcrumb>
-        {detailProduct ? (
-          <Row>
-            <Col span={12}>
-              <Image
-                width={500}
-                src={detailProduct.images.url}
-                className="detail-image-product"
-              />
-            </Col>
-            <Col span={12}>
-              <div className="box-detail">
-                <div className="row">
-                  <h2>{detailProduct.title.toUpperCase()}</h2>
-                </div>
-                <div>
-                  <Rate disabled defaultValue={detailProduct.rate} />
-                </div>
-                <p>
-                  {detailProduct.sold}{" "}
-                  <span className="span-sold-product">Sold</span>{" "}
-                  {detailProduct.comments.length}{" "}
-                  <span style={{ color: "rgb(144, 146, 148)" }}>Comments</span>
-                </p>
-                <span>$ {detailProduct.price}</span>
-                <p>{detailProduct.description}</p>
-
-                <Row style={{ marginBottom: 20 }}>
-                  <Col span={5} className="quantity-detail-product">
-                    <p>Size</p>
-                  </Col>
-                  <Col span={19}>
-                    <Select defaultValue={size} onChange={onChangeSize}>
-                      <Option value="S">S</Option>
-                      <Option value="M">M</Option>
-                      <Option value="L">L</Option>
-                      <Option value="XL">XL</Option>
-                    </Select>
-                  </Col>
-                </Row>
-
-                <Row>
-                  <Col span={5} className="quantity-detail-product">
-                    <p>Quantity</p>
-                  </Col>
-                  <Col span={19}>
-                    <div className="quantity-detail-product">
-                      <Button onClick={decrement}>-</Button>
-                      <InputNumber
-                        min={0}
-                        value={quantity}
-                        onChange={onChangeQuantity}
-                        style={{ width: 50 }}
-                        type="number"
-                      />
-                      <Button onClick={increment}>+</Button>
-                    </div>
-                  </Col>
-                </Row>
-
-                <Button
-                  type="primary"
-                  className="button-detail-product"
-                  onClick={() => addCart(detailProduct, quantity, size)}
-                >
-                  Add to Cart
-                </Button>
-              </div>
-            </Col>
-          </Row>
-        ) : null}
-
-        <div className="tabs">
-          <Tabs defaultActiveKey="1" centered>
-            <TabPane tab="Description" key="1">
-              <p>{detailProduct.content}</p>
-            </TabPane>
-            <TabPane tab="Comments" key="2">
-              <div className="tabs-comments">
-                {detailProduct &&
-                  detailProduct.comments.map((comment) => (
-                    <div className="row-comment" key={detailProduct._id}>
-                      <Row>
-                        <Col span={3}>
-                          <img
-                            className="avatar-comment"
-                            src={comment.userInfo.avatar}
-                            alt="img"
-                          />
-                        </Col>
-                        <Col span={21}>
-                          <div>
-                            <b className="name-comment">
-                              {comment.userInfo.name}
-                            </b>
-                          </div>
-                          <Rate
-                            disabled
-                            value={comment.rate}
-                            className="star"
-                          />
-                          <p className="time-comment">{comment.time}</p>
-                          <p>{comment.comment}</p>
-                        </Col>
-                      </Row>
-                    </div>
-                  ))}
-              </div>
-              <div className="add-comment">
-                <h3>Add a review</h3>
-                <p>
-                  Your email address will not be published. Required fields are
-                  marked *
-                </p>
-                <div>
-                  <div>
-                    Your Rating{" "}
-                    <span style={{ marginLeft: 20 }}>
-                      <Rate
-                        onChange={handleChangeRate}
-                        value={rate}
-                        className="star"
-                      />
-                    </span>
+      <Header />
+      <div>
+        <div className="checkout-wrap">
+          <Breadcrumb className="Breadcrumb">
+            <Breadcrumb.Item>
+              <Link to="/">Home</Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <Link to="/shop">Shop</Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>Product Detail</Breadcrumb.Item>
+          </Breadcrumb>
+          {detailProduct ? (
+            <Row>
+              <Col span={12}>
+                <Image
+                  width={500}
+                  src={detailProduct.images.url}
+                  className="detail-image-product"
+                />
+              </Col>
+              <Col span={12}>
+                <div className="box-detail">
+                  <div className="row">
+                    <h2>{detailProduct.title.toUpperCase()}</h2>
                   </div>
-                  <p>Your review</p>
-                  <TextArea
-                    rows={4}
-                    onChange={onChangeComment}
-                    value={newcomment}
-                  />
+                  <div>
+                    <Rate disabled defaultValue={detailProduct.rate} />
+                  </div>
+                  <p>
+                    {detailProduct.sold}{" "}
+                    <span className="span-sold-product">Sold</span>{" "}
+                    {detailProduct.comments.length}{" "}
+                    <span style={{ color: "rgb(144, 146, 148)" }}>
+                      Comments
+                    </span>
+                  </p>
+                  <span>$ {detailProduct.price}</span>
+                  <p>{detailProduct.description}</p>
+
+                  <Row style={{ marginBottom: 20 }}>
+                    <Col span={5} className="quantity-detail-product">
+                      <p>Size</p>
+                    </Col>
+                    <Col span={19}>
+                      <Select defaultValue={size} onChange={onChangeSize}>
+                        <Option value="S">S</Option>
+                        <Option value="M">M</Option>
+                        <Option value="L">L</Option>
+                        <Option value="XL">XL</Option>
+                      </Select>
+                    </Col>
+                  </Row>
+
+                  <Row>
+                    <Col span={5} className="quantity-detail-product">
+                      <p>Quantity</p>
+                    </Col>
+                    <Col span={19}>
+                      <div className="quantity-detail-product">
+                        <Button onClick={decrement}>-</Button>
+                        <InputNumber
+                          min={0}
+                          value={quantity}
+                          onChange={onChangeQuantity}
+                          style={{ width: 50 }}
+                          type="number"
+                        />
+                        <Button onClick={increment}>+</Button>
+                      </div>
+                    </Col>
+                  </Row>
+
                   <Button
                     type="primary"
-                    onClick={submitComment}
-                    style={{ marginTop: 30 }}
+                    className="button-detail-product"
+                    onClick={() => addCart(detailProduct, quantity, size)}
                   >
-                    Submit
+                    Add to Cart
                   </Button>
                 </div>
-              </div>
-            </TabPane>
-          </Tabs>
+              </Col>
+            </Row>
+          ) : null}
+
+          <div className="tabs">
+            <Tabs defaultActiveKey="1" centered>
+              <TabPane tab="Description" key="1">
+                <p>{detailProduct.content}</p>
+              </TabPane>
+              <TabPane tab="Comments" key="2">
+                <div className="tabs-comments">
+                  {detailProduct &&
+                    detailProduct.comments.map((comment) => (
+                      <div className="row-comment" key={detailProduct._id}>
+                        <Row>
+                          <Col span={3}>
+                            <img
+                              className="avatar-comment"
+                              src={comment.userInfo.avatar}
+                              alt="img"
+                            />
+                          </Col>
+                          <Col span={21}>
+                            <div>
+                              <b className="name-comment">
+                                {comment.userInfo.name}
+                              </b>
+                            </div>
+                            <Rate
+                              disabled
+                              value={comment.rate}
+                              className="star"
+                            />
+                            <p className="time-comment">{comment.time}</p>
+                            <p>{comment.comment}</p>
+                          </Col>
+                        </Row>
+                      </div>
+                    ))}
+                </div>
+                <div className="add-comment">
+                  <h3>Add a review</h3>
+                  <p>
+                    Your email address will not be published. Required fields
+                    are marked *
+                  </p>
+                  <div>
+                    <div>
+                      Your Rating{" "}
+                      <span style={{ marginLeft: 20 }}>
+                        <Rate
+                          onChange={handleChangeRate}
+                          value={rate}
+                          className="star"
+                        />
+                      </span>
+                    </div>
+                    <p>Your review</p>
+                    <TextArea
+                      rows={4}
+                      onChange={onChangeComment}
+                      value={newcomment}
+                    />
+                    <Button
+                      type="primary"
+                      onClick={submitComment}
+                      style={{ marginTop: 30 }}
+                    >
+                      Submit
+                    </Button>
+                  </div>
+                </div>
+              </TabPane>
+            </Tabs>
+          </div>
         </div>
-      </div>
-      <div className="relate-wrap">
-        <h3>Related Products</h3>
-      </div>
-      <div className="checkout-wrap">
-        <Carousel
-          rightArrow={
-            <button className="button-collection -right">
-              <RightOutlined />
-            </button>
-          }
-          leftArrow={
-            <button className="button-collection -left">
-              <LeftOutlined />
-            </button>
-          }
-          show={4}
-          slide={1}
-          swiping={true}
-          responsive={true}
-        >
-          {relateProducts.map((product) => (
+        <div className="relate-wrap">
+          <h3>Related Products</h3>
+        </div>
+        <div className="checkout-wrap">
+          <Carousel
+            rightArrow={
+              <button className="button-collection -right">
+                <RightOutlined />
+              </button>
+            }
+            leftArrow={
+              <button className="button-collection -left">
+                <LeftOutlined />
+              </button>
+            }
+            show={4}
+            slide={1}
+            swiping={true}
+            responsive={true}
+          >
+            {relateProducts.map((product) => (
               <div key={product._id} style={{ marginRight: 20 }}>
                 <ProductItem key={product._id} product={product} />
               </div>
             ))}
-        </Carousel>
+          </Carousel>
+        </div>
       </div>
+      <Footer />
     </div>
   );
 }

@@ -5,6 +5,8 @@ import axios from "axios";
 import { Breadcrumb } from "antd";
 import { Table } from "antd";
 import { Button } from "antd";
+import Header from "../../headers/Header";
+import Footer from "../../footers/Footer";
 
 function UserOrderHistory() {
   const state = useContext(GlobalState);
@@ -77,34 +79,40 @@ function UserOrderHistory() {
   console.log("history", history);
 
   return (
-    <div className="checkout-wrap">
-      <Breadcrumb className="Breadcrumb">
-        <Breadcrumb.Item>
-          <Link to="/">Home</Link>
-        </Breadcrumb.Item>
-        <Breadcrumb.Item>Orders</Breadcrumb.Item>
-      </Breadcrumb>
+    <div>
+      <Header />
+      <div className="checkout-wrap">
+        <Breadcrumb className="Breadcrumb">
+          <Breadcrumb.Item>
+            <Link to="/">Home</Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>Orders</Breadcrumb.Item>
+        </Breadcrumb>
 
-      {history.length !== 0 ? (
-        <div>
-          <h4 style={{ marginBottom: 40 }}>
-            You have {history.length} ordered
-          </h4>
+        {history.length !== 0 ? (
+          <div>
+            <h4 style={{ marginBottom: 40 }}>
+              You have {history.length} ordered
+            </h4>
 
-          <Table
-            rowKey="_Id"
-            columns={columns}
-            dataSource={history}
-            pagination={false}
-            bordered={true}
-          />
-        </div>
-      ) : (
-        <div className="mess-no-order">
-          <p>You don't have any orders !</p>
-          <Link to="/shop"><Button type="primary">Continue shopping</Button></Link>
-        </div>
-      )}
+            <Table
+              rowKey="_Id"
+              columns={columns}
+              dataSource={history}
+              pagination={false}
+              bordered={true}
+            />
+          </div>
+        ) : (
+          <div className="mess-no-order">
+            <p>You don't have any orders !</p>
+            <Link to="/shop">
+              <Button type="primary">Continue shopping</Button>
+            </Link>
+          </div>
+        )}
+      </div>
+      <Footer />
     </div>
   );
 }

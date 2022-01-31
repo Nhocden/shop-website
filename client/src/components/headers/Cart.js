@@ -46,7 +46,7 @@ export default function Cart() {
     return (
       <Menu className="menu-cart">
         {cart.map((product) => (
-          <Menu.Item>
+          <Menu.Item key={product._id}>
             <div className="cart-item">
               <div className="cart-item-content">
                 <Link to={`/detail/${product._id}`}>

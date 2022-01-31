@@ -25,6 +25,7 @@ export default function Footer() {
         padding: "80px 80px",
         marginTop: "50px",
       }}
+      className="user-footer"
     >
       <Row>
         <Col span={6}>

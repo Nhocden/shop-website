@@ -8,6 +8,8 @@ import Filters from "./Filters";
 import LoadMore from "./LoadMore";
 import { Row, Col } from "antd";
 import { Breadcrumb } from "antd";
+import Header from "../../headers/Header";
+import Footer from "../../footers/Footer";
 
 function Products() {
   const state = useContext(GlobalState);
@@ -21,8 +23,8 @@ function Products() {
 
   useEffect(() => {
     setCategory("");
-    setSearch("")
-  },[]);
+    setSearch("");
+  }, []);
 
   const handleCheck = (id) => {
     products.forEach((product) => {
@@ -54,7 +56,6 @@ function Products() {
     }
   };
 
-
   if (loading)
     return (
       <div>
@@ -62,34 +63,38 @@ function Products() {
       </div>
     );
   return (
-    <div className="checkout-wrap">
-      <Breadcrumb className="Breadcrumb">
-        <Breadcrumb.Item>
-          <Link to="/">Home</Link>
-        </Breadcrumb.Item>
-        <Breadcrumb.Item>Shop</Breadcrumb.Item>
-      </Breadcrumb>
+    <div>
+      <Header />
+      <div className="checkout-wrap">
+        <Breadcrumb className="Breadcrumb">
+          <Breadcrumb.Item>
+            <Link to="/">Home</Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>Shop</Breadcrumb.Item>
+        </Breadcrumb>
 
-      <Filters />
+        <Filters />
 
-      <Row gutter={24}>
-        {products.map((product) => {
-          return (
-            <Col className="column_product" span={6} key={product._id}>
-              <ProductItem
-                key={product._id}
-                product={product}
-                isAdmin={isAdmin}
-                deleteProduct={deleteProduct}
-                handleCheck={handleCheck}
-              />
-            </Col>
-          );
-        })}
-      </Row>
+        <Row gutter={24}>
+          {products.map((product) => {
+            return (
+              <Col className="column_product" span={6} key={product._id}>
+                <ProductItem
+                  key={product._id}
+                  product={product}
+                  isAdmin={isAdmin}
+                  deleteProduct={deleteProduct}
+                  handleCheck={handleCheck}
+                />
+              </Col>
+            );
+          })}
+        </Row>
 
-      <LoadMore />
-      {products.length === 0 && <Loading />}
+        <LoadMore />
+        {products.length === 0 && <Loading />}
+      </div>
+      <Footer />
     </div>
   );
 }
