@@ -34,11 +34,19 @@ export default function PageAdmin() {
               <Route path="/admin/create_category" exact component={NewCategory} />
               <Route path="/admin/categories" exact component={AllCategories} />
               <Route path="/admin/create_product" exact component={NewProduct} />
+              <Route path="/admin/edit_product/:id" exact component={NewProduct} />
               <Route path="/admin/products" exact component={AllProducts} />
               <Route path="/admin/create_user" exact component={NewUser} />
               <Route path="/admin/users" exact component={AllUsers} />
               <Route path="/admin/create_order" exact component={NewOrder} />
               <Route path="/admin/orders" exact component={AllOrders} />
+
+              {/* import Categories from './categories/Categories'
+              import CreateProduct from './createProduct/CreateProduct' */}
+
+              {/* <Route path="/category" exact component={isAdmin ? Categories : NotFound} />
+            <Route path="/create_product" exact component={isAdmin ? CreateProduct : NotFound} />
+            <Route path="/edit_product/:id" exact component={isAdmin ? CreateProduct : NotFound} /> */}
             </Switch>
             </div>
           </Content>

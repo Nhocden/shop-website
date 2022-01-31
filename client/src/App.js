@@ -9,8 +9,6 @@ import PageAdmin from "./components/admin/PageAdmin";
 
 import "antd/dist/antd.css";
 
-console.log("DataProvider",DataProvider)
-
 function App() {
   return (
     <DataProvider>

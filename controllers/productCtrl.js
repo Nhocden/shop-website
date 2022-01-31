@@ -86,7 +86,9 @@ const productCtrl = {
             })
 
             await newProduct.save()
-            res.json({msg: "Created a product"})
+            console.log("newProduct",newProduct)
+            res.json(newProduct)
+            // res.json({msg: "Created a product"})
 
         } catch (err) {
             return res.status(500).json({msg: err.message})
@@ -105,11 +107,11 @@ const productCtrl = {
             const {title, price, description, content, images, category} = req.body;
             if(!images) return res.status(400).json({msg: "No image upload"})
 
-            await Products.findOneAndUpdate({_id: req.params.id}, {
+            const product = await Products.findOneAndUpdate({_id: req.params.id}, {
                 title: title.toLowerCase(), price, description, content, images, category
             })
 
-            res.json({msg: "Updated a Product"})
+            res.json(product)
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
