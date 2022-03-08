@@ -84,7 +84,7 @@ function Header() {
         <div className="header-left">
           <div className="phone">
             <a href="tel:#">
-              <PhoneOutlined />: call 0838117705 |
+              <PhoneOutlined />: call 0838117705 | 
             </a>
           </div>
           <div className="social-icons">
@@ -112,11 +112,11 @@ function Header() {
           </div>
         </div>
         <div className="header-right">
-          <Dropdown overlay={menuLanguages}>
+          {/* <Dropdown overlay={menuLanguages}>
             <span className="languages">
               <GlobalOutlined /> Languages <DownOutlined />
             </span>
-          </Dropdown>
+          </Dropdown> */}
           {isLogged ? (
             <Dropdown overlay={menuAccount}>
               <span className="account">

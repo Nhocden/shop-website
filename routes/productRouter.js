@@ -12,6 +12,7 @@ router.get('/allproducts', productCtrl.getAllProducts)
 
 
 router.route('/products/:id')
+    .get(productCtrl.getDetailProducts)
     .delete(auth, authAdmin, productCtrl.deleteProduct)
     .put(auth, authAdmin, productCtrl.updateProduct)
 

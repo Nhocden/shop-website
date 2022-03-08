@@ -23,6 +23,8 @@ function Login() {
   const loginSubmit = async (e) => {
     e.preventDefault();
     console.log("uesr", user);
+    if (!user.email || !user.password)
+      return message.error("You have not entered all the fields.")
     try {
       const res = await axios.post("/user/login", { ...user });
 

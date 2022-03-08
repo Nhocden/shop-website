@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const userCtrl = require('../controllers/userCtrl')
 const auth = require('../middleware/auth')
+const authAdmin = require('../middleware/authAdmin')
 
 router.post('/register', userCtrl.register)
 
@@ -36,6 +37,13 @@ router.patch('/addcart', auth, userCtrl.addCart)
 router.get('/history', auth, userCtrl.history)
 
 router.get('/history/:id', auth, userCtrl.historyDetail)
+
+router.get('/getAllUsers', userCtrl.getAllUsers)
+
+router.route('/detailUser/:id')
+    .get(auth, authAdmin, userCtrl.getDetailUser)
+    .delete(userCtrl.deleteUser)
+    .patch(auth, authAdmin, userCtrl.updateUser)
 
 
 module.exports = router

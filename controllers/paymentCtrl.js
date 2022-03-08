@@ -17,7 +17,6 @@ const paymentCtrl = {
             const user = await Users.findById(req.user.id).select('name email')
             if(!user) return res.status(400).json({msg: "User does not exist."})
 
-            console.log("req.body",req.body)
             const {cart, address, total} = req.body;
 
             const {_id, name, email} = user;
@@ -37,7 +36,34 @@ const paymentCtrl = {
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
-    }
+    },
+    getDetailPayment: async(req, res) =>{
+        try {
+            const order = await Payments.findById(req.params.id)
+            res.json(order)
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+    deletePayment: async(req, res) =>{
+        try {
+            const order = await Payments.findByIdAndDelete(req.params.id)
+            res.json({msg: "Deleted a Order success"})
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+    updatePayment: async(req, res) =>{
+        try {
+            const orderInfo = req.body.order
+            console.log("orderInfo",req.body)
+            const order = await Payments.findByIdAndUpdate(req.params.id, orderInfo)
+            // console.log("order",order)
+            res.json(order)
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
 }
 
 const sold = async (id, quantity, oldSold) =>{

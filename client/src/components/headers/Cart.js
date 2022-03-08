@@ -53,7 +53,7 @@ export default function Cart() {
                   <p>{product.title}</p>
                 </Link>
                 <p>
-                  {product.quantity}x${product.price} Size: {product.size}
+                  {product.quantity}x {product.price}<span>đ</span> - Size: {product.size}
                 </p>
               </div>
               <div className="cart-item-image">
@@ -76,7 +76,7 @@ export default function Cart() {
 
         <div className="cart-item-total">
           <span>Total:</span>
-          <span className="cart-total-price">${total}</span>
+          <span className="cart-total-price">{total} đ</span>
         </div>
         <Link to="/checkout">
           <button className="cart-item-button">
@@ -94,7 +94,7 @@ export default function Cart() {
           <Badge count={number} showZero>
             <ShoppingCartOutlined className="cart-icon" />
           </Badge>
-          <span className="cart-icon-span">$ {total}</span>
+          <span className="cart-icon-span"> {total} đ</span>
         </span>
       </Dropdown>
     </div>

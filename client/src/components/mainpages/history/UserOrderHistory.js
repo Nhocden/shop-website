@@ -19,7 +19,6 @@ function UserOrderHistory() {
     {
       title: "Id",
       dataIndex: "_id",
-      // key: "_id",
       align: "left",
       render: (images, record) => (
         <div>
@@ -30,7 +29,6 @@ function UserOrderHistory() {
     {
       title: "Date of Purchased",
       dataIndex: "createdAt",
-      // key: "createdAt",
       align: "left",
       render: (createdAt, record) => (
         <div>{new Date(record.createdAt).toLocaleDateString()}</div>
@@ -39,13 +37,11 @@ function UserOrderHistory() {
     {
       title: "Total",
       dataIndex: "total",
-      // key: "total",
       align: "left",
-      render: (createdAt, record) => <div>{record.total}</div>,
+      render: (createdAt, record) => <div>{record.total}<span style={{textTransform:"lowercase"}}> đ</span></div>,
     },
     {
       title: "Action",
-      // key: "action",
       align: "left",
       render: (text, record) => (
         <div>

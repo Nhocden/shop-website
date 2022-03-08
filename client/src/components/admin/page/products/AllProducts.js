@@ -1,23 +1,30 @@
 import React, { useState, useContext, useEffect } from "react";
 import { GlobalState } from "../../../../GlobalState";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
 import { Table, Button } from "antd";
+import { Popconfirm, message } from "antd";
+import { Breadcrumb } from "antd";
 
 export default function AllProducts() {
   const state = useContext(GlobalState);
-  const [allProducts] = state.productsAPI.allProducts;
+  const [allProducts, setAllProducts] = useState([]);
+  const [token] = state.token;
+  const history = useHistory();
 
-  useEffect(() => {
-
-  }, [allProducts])
-
-  console.log("allProducts",allProducts)
+  useEffect(() =>{
+    const getAllProducts = async () => {
+        const res_all = await axios.get(`/api/allproducts`)
+        setAllProducts(res_all.data)
+    }
+    getAllProducts()
+  },[])
 
   const columns = [
     {
       title: "Id",
       dataIndex: "_id",
-      // key: "_id",
       align: "left",
       render: (images, record) => (
         <div>
@@ -28,13 +35,8 @@ export default function AllProducts() {
     {
       title: "Title",
       dataIndex: "title",
-      // key: "_id",
       align: "left",
-      render: (title, record) => (
-        <div>
-          {title}
-        </div>
-      ),
+      render: (title, record) => <div>{title}</div>,
     },
     {
       title: "image",
@@ -42,32 +44,30 @@ export default function AllProducts() {
       align: "left",
       render: (images, record) => (
         <div>
-          <Link to={`/admin/edit_product/${record._id}`}><img src={record.images.url} alt="img" className="image-all-products"/></Link>
+          <Link to={`/admin/edit_product/${record._id}`}>
+            <img
+              src={record.images.url}
+              alt="img"
+              className="image-all-products"
+            />
+          </Link>
         </div>
       ),
     },
     {
       title: "Price",
       dataIndex: "price",
-      // key: "total",
       align: "left",
-      render: (price) => <div>$ {price}</div>,
+      render: (price) => <div> {price} <span style={{textTransform:"lowercase"}}>đ</span></div>,
     },
     {
-      title: "Category",
-      dataIndex: "category",
-      // key: "_id",
+      title: "Quantity",
+      dataIndex: "quantityOfProduct",
       align: "left",
-      render: (category) => (
-        <div>
-          <Link >{category}</Link>
-        </div>
-      ),
     },
     {
       title: "Update Time",
       dataIndex: "updatedAt",
-      // key: "updatedAt",
       align: "left",
       render: (updatedAt, record) => (
         <div>{new Date(record.updatedAt).toLocaleDateString()}</div>
@@ -77,29 +77,65 @@ export default function AllProducts() {
       title: "Action",
       // key: "action",
       align: "left",
-      width:"200px",
+      width: "200px",
       render: (text, record) => (
         <div>
-          <Link to={`/order/${record._id}`} style={{ marginRight: "10px" }}>
-            <Button type="primary">View</Button>
+          <Link to={`/admin/edit_product/${record._id}`} style={{ marginRight: "10px" }}>
+            <Button type="primary">Edit</Button>
           </Link>
-          <Link to={`/order/${record._id}`}>
-            <Button type="primary" danger>Delete</Button>
-          </Link>
+          <Popconfirm
+            title="Are you sure to delete this product?"
+            onConfirm={() => confirm(record._id)}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button type="primary" danger>
+              Delete
+            </Button>
+          </Popconfirm>
         </div>
       ),
     },
   ];
 
+  const confirm = async (id) => {
+    const product = allProducts.filter((product) => product._id === id);
+    console.log("products",allProducts)
+    allProducts.pop(product);
+    console.log("===>products",allProducts)
+    setAllProducts(allProducts);
+    try {
+      const res = await axios.delete(`/api/products/${id}`, {
+        headers: { Authorization: token },
+      });
+      setAllProducts(allProducts);
+      message.success(res.data.msg);
+      history.push(`/admin/products`);
+    } catch (err) {
+      message.error(err.response.data.msg);
+    }
+  };
+
   return (
     <div>
-      <Table
-        rowKey="_Id"
-        columns={columns}
-        dataSource={allProducts}
-        pagination={false}
-        bordered={true}
-      />
+      <div className="breadcrumb">
+        <Breadcrumb>
+          <Breadcrumb.Item>
+            <a href="/admin">Home</a>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>All Product</Breadcrumb.Item>
+        </Breadcrumb>
+      </div>
+
+      <div className="create_product" style={{padding:"0px 40px"}}>
+        <Table
+          rowKey="_Id"
+          columns={columns}
+          dataSource={allProducts}
+          pagination={true}
+          bordered={true}
+        />
+      </div>
     </div>
   );
 }

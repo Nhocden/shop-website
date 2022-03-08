@@ -36,10 +36,14 @@ const userCtrl = {
       const activation_token = createActivationToken(newUser);
 
       const url = `${CLIENT_URL}/user/activate/${activation_token}`;
-      sendMail(email, url, "Verify your email address");
+      const content = `<br>
+                      <p>email: ${email}</p>
+                      <p>password: ${password}</p>
+                      <br>`
+      sendMail(email, url, "Verify your email address", content);
 
       res.json({
-        msg: "Register Success! Please activate your email to start.",
+        msg: "Register Success! Please activate your email to start!",
       });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
@@ -120,7 +124,7 @@ const userCtrl = {
       const access_token = createAccessToken({ id: user._id });
       const url = `${CLIENT_URL}/user/reset/${access_token}`;
 
-      sendMail(email, url, "Reset your password");
+      sendMail(email, url, "Reset your password","");
       res.json({ msg: "Re-send the password, please check your email." });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
@@ -366,6 +370,40 @@ const userCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+  getAllUsers: async (req, res) => {
+    try {
+      const users = await Users.find();
+      res.json(users);
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+  getDetailUser: async (req, res) => {
+    try {
+      const user = await Users.findById(req.params.id);
+      res.json(user)
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+  deleteUser: async (req, res) => {
+    try {
+      const user = await Users.findByIdAndDelete(req.params.id);
+      const payments = await Payments.deleteMany({user_id: req.params.id})
+      res.json(user)
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+  updateUser: async (req, res) => {
+    try {
+      const userInfo = req.body.user
+      const user = await Users.findByIdAndUpdate(req.params.id, userInfo);
+      res.json(user)
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  }
 };
 
 const createActivationToken = (payload) => {

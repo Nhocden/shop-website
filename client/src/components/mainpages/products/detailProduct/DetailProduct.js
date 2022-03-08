@@ -94,7 +94,7 @@ function DetailProduct() {
   };
 
   const submitComment = async () => {
-    if (!isLogged) return alert("Please login to continue buying");
+    if (!isLogged) return message.error("Please login to continue comment")
 
     if (newcomment.length === 0)
       return message.error("you have not commented yet");
@@ -109,11 +109,12 @@ function DetailProduct() {
     });
 
     setComments(newcomments);
+    console.log("add 12414dsnflk")
     console.log("comments", newcomments);
 
     const res = await axios.patch(
       `/api/products/comment/${detailProduct._id}`,
-      { comments: comments },
+      { comments: newcomments },
       {
         headers: { Authorization: token },
       }
@@ -127,7 +128,6 @@ function DetailProduct() {
     }
   };
 
-  console.log("comments", comments);
 
   return (
     <div>
@@ -168,7 +168,7 @@ function DetailProduct() {
                       Comments
                     </span>
                   </p>
-                  <span>$ {detailProduct.price}</span>
+                  <span>{detailProduct.price} đ</span>
                   <p>{detailProduct.description}</p>
 
                   <Row style={{ marginBottom: 20 }}>
@@ -292,7 +292,7 @@ function DetailProduct() {
           <h3>Related Products</h3>
         </div>
         <div className="checkout-wrap">
-          <Carousel
+          {/* <Carousel
             rightArrow={
               <button className="button-collection -right">
                 <RightOutlined />
@@ -307,13 +307,23 @@ function DetailProduct() {
             slide={1}
             swiping={true}
             responsive={true}
-          >
-            {relateProducts.map((product) => (
+          > */}
+            {/* {relateProducts.map((product) => (
               <div key={product._id} style={{ marginRight: 20 }}>
                 <ProductItem key={product._id} product={product} />
               </div>
-            ))}
-          </Carousel>
+            ))} */}
+          {/* </Carousel> */}
+          <Row gutter={24}>
+          {relateProducts.map((product) => 
+              <Col className="column_product" span={6} key={product._id}>
+                <ProductItem
+                  key={product._id}
+                  product={product}
+                />
+              </Col>
+          )}
+        </Row>
         </div>
       </div>
       <Footer />

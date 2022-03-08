@@ -39,7 +39,7 @@ function UserOrderDetails() {
       dataIndex: "price",
       align: "left",
       key: "price",
-      render: (price) => <div>$ {price}</div>,
+      render: (price) => <div>{price}<span style={{textTransform:"lowercase"}}> đ</span></div>,
     },
     {
       title: "QUANTITY",
@@ -54,7 +54,7 @@ function UserOrderDetails() {
       key: "price",
       align: "left",
       render: (quantity, product) => (
-        <div>$ {product.price * product.quantity}</div>
+        <div>{product.price * product.quantity}<span style={{textTransform:"lowercase"}}> đ</span></div>
       ),
     },
   ];
@@ -158,7 +158,7 @@ function UserOrderDetails() {
               <Row className="row-total">
                 <Col span={8}>Total:</Col>
                 <Col span={16} style={{ color: "red" }}>
-                  $ {orderDetails.total}
+                   {orderDetails.total}<span> đ</span>
                 </Col>
               </Row>
             </div>

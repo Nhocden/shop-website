@@ -72,17 +72,26 @@ const productCtrl = {
             return res.status(500).json({msg: err.message})
         }
     },
+    getDetailProducts: async(req, res) =>{
+        try {
+            const product = await Products.findById(req.params.id)
+            res.json(product)
+            
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
     createProduct: async(req, res) =>{
         try {
-            const {product_id, title, price, description, content, images, category} = req.body;
+            const {title, price, quantityOfProduct, description, content, images, category} = req.body;
             if(!images) return res.status(400).json({msg: "No image upload"})
 
-            const product = await Products.findOne({product_id})
-            if(product)
-                return res.status(400).json({msg: "This product already exists."})
-
+            
+            const products = await Products.find()
+            console.log("products length", products.length)
+            console.log("vafo creare api")
             const newProduct = new Products({
-                product_id, title: title.toLowerCase(), price, description, content, images, category
+                product_id:products.length, title: title.toLowerCase(), price, quantityOfProduct, description, content, images, category
             })
 
             await newProduct.save()
@@ -104,11 +113,11 @@ const productCtrl = {
     },
     updateProduct: async(req, res) =>{
         try {
-            const {title, price, description, content, images, category} = req.body;
+            const {title, price, quantityOfProduct, pushlished, sold, description, content, images, category, comments} = req.body;
             if(!images) return res.status(400).json({msg: "No image upload"})
 
             const product = await Products.findOneAndUpdate({_id: req.params.id}, {
-                title: title.toLowerCase(), price, description, content, images, category
+                title: title.toLowerCase(), price, quantityOfProduct, pushlished, sold, description, content, images, category, comments
             })
 
             res.json(product)
@@ -118,10 +127,9 @@ const productCtrl = {
     },
     createComment: async(req, res) =>{
         try {
-            await Products.findOneAndUpdate({_id: req.params.id}, {
+            const product = await Products.findOneAndUpdate({_id: req.params.id}, {
                 comments: req.body.comments
             })
-
             res.json({msg: "Updated a Product"})
         } catch (err) {
             return res.status(500).json({msg: err.message})

@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { GlobalState } from "../../../GlobalState";
+import { GlobalState } from "../../../../GlobalState";
+import { useHistory, useParams } from "react-router-dom";
 import axios from "axios";
 // import PaypalButton from "./PaypalButton";
 import { Row, Col } from "antd";
@@ -8,22 +9,20 @@ import { Table } from "antd";
 import { Button } from "antd";
 import { Breadcrumb } from "antd";
 import { message } from "antd";
-import { useHistory } from "react-router-dom";
 import { Result } from "antd";
 import { Form, Input } from "antd";
-import Header from "../../headers/Header";
-import Footer from "../../footers/Footer";
 
-function Cart() {
-  const history = useHistory();
+function UpdateOrder() {
   const state = useContext(GlobalState);
-  const [cart, setCart] = state.userAPI.cart;
-  const [userInfo] = state.userAPI.userInfo;
+  const [cart, setCart] = useState([]);
+  const [order, setOrder] = useState({});
+  const [userInfo,setUserInfo] = useState({});
   const [token] = state.token;
   const [total, setTotal] = useState(0);
   const [form] = Form.useForm();
 
-  console.log("userInfo", userInfo);
+  const history = useHistory();
+  const param = useParams();
 
   const columns = [
     {
@@ -94,22 +93,26 @@ function Cart() {
   ];
 
   useEffect(() => {
-    const getTotal = () => {
-      const total = cart.reduce((prev, item) => {
+    const getOrder = async () => {
+      console.log("param.id",param.id)
+      const res = await axios.get(`/api/detailPayment/${param.id}`)
+      console.log("res", res.data);
+      const total = res.data.cart.reduce((prev, item) => {
         return prev + item.quantity * item.price;
       }, 0);
 
       setTotal(total);
+      setCart(res.data.cart)
+      setOrder(res.data)
+      form.setFieldsValue({
+        phone: res.data.address.phone,
+        city: res.data.address.city,
+        addressName: res.data.address.addressName,
+      });
     };
 
-    getTotal();
-
-    form.setFieldsValue({
-      phone: userInfo.phone,
-      city: userInfo.city,
-      addressName: userInfo.addressName,
-    });
-  }, [form, cart]);
+    getOrder();
+  }, [param.id]);
 
   const addToCart = async (cart) => {
     await axios.patch(
@@ -173,59 +176,22 @@ function Cart() {
   // };
 
   const Cash_on_Delivery = async (address) => {
-    const res = await axios.post(
-      "/api/payment",
-      { cart, address, total },
-      {
-        headers: { Authorization: token },
-      }
+    order["address"] = address
+    const res = await axios.put(
+      `/api/detailPayment/${param.id}`,
+      {order:order},
     );
-
-    setCart([]);
-    addToCart([]);
-    message.success("Order Success !!");
-    history.push(`/order/${res.data._id}`);
+    setOrder(res.data)
+    // // setCart([]);
+    // // addToCart([]);
+    console.log("res",res.data)
+    message.success("Update a Order success");
+    // history.push(`/admin/edit_order/${res.data._id}`);
   };
-
-  if (cart.length === 0)
-    return (
-      <div>
-        <Header />
-        <div className="checkout-wrap">
-          <Breadcrumb className="Breadcrumb">
-            <Breadcrumb.Item>
-              <Link to="/">Home</Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>Check out</Breadcrumb.Item>
-          </Breadcrumb>
-          <div className="cart-empty">
-            <Result
-              icon={
-                <img
-                  className="cart-empty-image"
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSnLrK6ZKKqBnuCbsSveh5j2UKv3enaV74MQ&usqp=CAU"
-                  alt="img"
-                />
-              }
-              title={
-                <i>Your shopping cart is empty. Discover more products !</i>
-              }
-              extra={
-                <Link to="/shop">
-                  <Button type="primary">Continue shopping</Button>
-                </Link>
-              }
-            />
-          </div>
-        </div>
-        <Footer />
-      </div>
-    );
 
   return (
     <div>
-      <Header />
-      <div className="checkout-wrap">
+      <div>
         <Breadcrumb className="Breadcrumb">
           <Breadcrumb.Item>
             <Link to="/">Home</Link>
@@ -299,7 +265,7 @@ function Cart() {
 
                 <Form.Item wrapperCol={{ span: 24 }}>
                   <Button type="primary" htmlType="submit" block>
-                    Check out
+                    Edit Order
                   </Button>
                 </Form.Item>
               </Form>
@@ -309,9 +275,9 @@ function Cart() {
           </Col>
         </Row>
       </div>
-      <Footer />
     </div>
   );
 }
 
-export default Cart;
+export default UpdateOrder;
+

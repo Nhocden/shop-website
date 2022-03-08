@@ -32,7 +32,7 @@ function UserAPI(token) {
   }, [token]);
 
   const addCart = async (product, quantity = 1, size = "M") => {
-    if (!isLogged) return alert("Please login to continue buying");
+    if (!isLogged) return message.error("Please login to continue buying")
 
     console.log("quantity", quantity, "size", size)
 

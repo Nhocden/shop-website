@@ -20,7 +20,7 @@ function ProductItem({ product }) {
       <div className="product-card-content">
         <Rate allowHalf defaultValue={product.rate} disabled className="star"/>
         <Link to={`/detail/${product._id}`}><h2 title={product.title} style={{fontSize:16}}>{product.title}</h2></Link>
-        <p className="price-product">${product.price}</p>
+        <p className="price-product">{product.price} <span>đ</span></p>
         <p>{product.description}</p>
       </div>
     </div>
