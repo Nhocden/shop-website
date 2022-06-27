@@ -92,9 +92,9 @@ function UserOrderDetails() {
         {orderDetails.status !== 3 ? (
           <div className="step-order">
             <Steps progressDot current={orderDetails.status}>
-              <Step title="Ordered" />
-              <Step title="Packed" />
-              <Step title="Delivered" />
+              <Step title="Ordered" description="3/3/2022 14:45:20"/>
+              <Step title="Packed" description="3/3/2022 14:50:27"/>
+              <Step title="Delivered" description="3/3/2022 14:51:12"/>
               <Step title="Finished" />
             </Steps>
           </div>

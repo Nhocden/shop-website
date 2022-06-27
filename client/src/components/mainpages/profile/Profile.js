@@ -145,7 +145,7 @@ export default function Profile() {
                 // }}
               >
                 <Form.Item label="Username" name="name" className="form-label">
-                  <Input className="input-profile" maxLength={5} />
+                  <Input className="input-profile"  />
                 </Form.Item>
 
                 <Form.Item label="Email" name="email">

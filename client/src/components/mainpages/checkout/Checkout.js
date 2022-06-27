@@ -89,7 +89,7 @@ function Cart() {
       dataIndex: "price",
       key: "price",
       align: "left",
-      render: (text, product) => <div>{product.price * product.quantity}</div>,
+      render: (text, product) => <div>{product.price * product.quantity}<span style={{textTransform:"lowercase"}}>đ</span></div>,
     },
   ];
 
