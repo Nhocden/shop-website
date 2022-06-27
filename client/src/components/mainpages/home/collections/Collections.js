@@ -4,7 +4,7 @@ import "./Collections.css";
 import { Tabs } from "antd";
 import { Carousel } from "@trendyol-js/react-carousel";
 import ProductItem from "../../utils/productItem/ProductItem";
-import { LeftOutlined, RightOutlined } from '@ant-design/icons'
+import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 
 const { TabPane } = Tabs;
 
@@ -13,7 +13,6 @@ export default function Collections() {
   const [allProducts] = state.productsAPI.allProducts;
   const [categories] = state.categoriesAPI.categories;
   const [isAdmin] = state.userAPI.isAdmin;
-  
 
   const deleteProduct = () => {
     console.log("delete");

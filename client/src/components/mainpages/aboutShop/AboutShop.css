@@ -1,0 +1,36 @@
+.about-content{
+    padding-right: 20px !important;
+    color: rgb(114, 117, 119);
+}
+
+.how-bor1{
+    padding: 0px 30px;
+}
+
+.hov-img0{
+    display: block;
+    border: 2px solid rgb(202, 199, 199);
+    width: 370px;
+    height: 370px;
+}
+
+.row-image{
+    width: 370px;
+    height: 370px;
+    margin:auto;
+    display: flex;
+    justify-content: center;
+}
+
+
+.image11{
+    margin-top: -20px;
+    margin-bottom: 20px;
+    margin-right: -20px;
+}
+
+.image22{
+    margin-top: -20px;
+    margin-bottom: 20px;
+    margin-left: -20px;
+}

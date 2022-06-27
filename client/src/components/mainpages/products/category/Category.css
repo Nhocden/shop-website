@@ -1,0 +1,13 @@
+.category-title{
+    text-align: center;
+    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQszccKy633aKOijlSct2G5-4gHpcwvCTsjnA&usqp=CAU");
+    backdrop-filter: blur(1px);
+    background-size:100% 100%;
+    padding:50px 40px
+}
+
+.category-title h1 {
+    font-size: 35px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}

@@ -1,9 +1,9 @@
-import React, { useContext,} from "react";
+import React, { useContext, useEffect } from "react";
 import { GlobalState } from "../../GlobalState";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Cart from "./Cart";
-import WishList from "./WishList";
+// import WishList from "./WishList";
 import {
   FacebookFilled,
   InstagramFilled,
@@ -17,14 +17,23 @@ import {
 } from "@ant-design/icons";
 import { Avatar } from "antd";
 import { Menu, Dropdown } from "antd";
-import { Input } from "antd";
-
 import { ReactComponent as Logo } from "../../Images/logo1.svg";
+import { AutoComplete } from "antd";
+const { Option } = AutoComplete;
 
 function Header() {
   const state = useContext(GlobalState);
   const [isLogged] = state.userAPI.isLogged;
+  const [isAdmin] = state.userAPI.isAdmin;
   const [userInfo] = state.userAPI.userInfo;
+  const [search, setSearch] = state.productsAPI.search;
+  const [category, setCategory] = state.productsAPI.category;
+  const [products] = state.productsAPI.products;
+
+  useEffect(() => {
+    setCategory("");
+    setSearch("");
+  }, []);
 
   const logoutUser = async () => {
     await axios.get("/user/logout");
@@ -32,6 +41,11 @@ function Header() {
     localStorage.removeItem("firstLogin");
 
     window.location.href = "/";
+  };
+
+  const handleSearch = (value) => {
+    console.log("value", value);
+    setSearch(value.toLowerCase());
   };
 
   const menuLanguages = (
@@ -51,8 +65,11 @@ function Header() {
         <Link to="/profile">Profile</Link>
       </Menu.Item>
       <Menu.Item>
-        <Link to="/history">Orders</Link>
+        <Link to="/order">Orders</Link>
       </Menu.Item>
+      {isAdmin ? <Menu.Item>
+        <Link to="/admin">product management</Link>
+      </Menu.Item>:null}
       <Menu.Item>
         <Link to="/" onClick={logoutUser}>
           Logout
@@ -63,12 +80,11 @@ function Header() {
 
   return (
     <>
-      {/* <header className="header"> */}
       <div className="header-top">
         <div className="header-left">
           <div className="phone">
             <a href="tel:#">
-              <PhoneOutlined />: call 0838117705 |
+              <PhoneOutlined />: call 0838117705 | 
             </a>
           </div>
           <div className="social-icons">
@@ -96,17 +112,16 @@ function Header() {
           </div>
         </div>
         <div className="header-right">
-          <Dropdown overlay={menuLanguages}>
-            <span  className="languages">
+          {/* <Dropdown overlay={menuLanguages}>
+            <span className="languages">
               <GlobalOutlined /> Languages <DownOutlined />
             </span>
-          </Dropdown>
+          </Dropdown> */}
           {isLogged ? (
             <Dropdown overlay={menuAccount}>
               <span className="account">
                 <Avatar
                   src={userInfo.avatar}
-                  icon={<UserOutlined />}
                   size={25}
                 />
                 <span style={{ marginLeft: 10 }}>{userInfo.name}</span>
@@ -130,7 +145,31 @@ function Header() {
         <div className="header-middle">
           <div className="search">
             <SearchOutlined style={{ fontSize: 25 }} />
-            <Input placeholder="Search product..." bordered={false} />
+            <AutoComplete
+              onSearch={handleSearch}
+              placeholder="Search product..."
+              dropdownMatchSelectWidth={false}
+              value={search}
+              notFoundContent="No results were found !"
+              bordered={false}
+            >
+              {search &&
+                products.map((product) => (
+                  <Option key={product._id}>
+                    <div  style={{ padding:"0px 10px" }}>
+                      <Link to={`/detail/${product._id}`}>
+                        <img
+                          src={product.images.url}
+                          alt=""
+                          className="cart-item-img"
+                          style={{ width: 60, height: 60 }}
+                        />
+                        <span style={{color:"black",marginLeft:10}}>{product.title}</span>
+                      </Link>
+                    </div>
+                  </Option>
+                ))}
+            </AutoComplete>
           </div>
           <div>
             <Link to="/" className="logo">
@@ -138,7 +177,8 @@ function Header() {
             </Link>
           </div>
           <div className="cart-icons">
-            <WishList />
+            {/* <WishList /> */}
+            <div style={{ width: 100 }}></div>
             <Cart />
           </div>
         </div>

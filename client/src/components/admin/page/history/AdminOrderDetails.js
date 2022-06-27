@@ -1,8 +1,8 @@
 import React, {useState, useEffect, useContext} from 'react'
 import {useParams} from 'react-router-dom'
-import {GlobalState} from '../../../GlobalState'
+import { GlobalState } from "../../../../GlobalState";
 
-function OrderDetails() {
+function AdminOrderDetails() {
     const state = useContext(GlobalState)
     const [history] = state.userAPI.history
     const [orderDetails, setOrderDetails] = useState([])
@@ -68,4 +68,4 @@ function OrderDetails() {
     )
 }
 
-export default OrderDetails
+export default AdminOrderDetails

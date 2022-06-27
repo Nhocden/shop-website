@@ -1,0 +1,104 @@
+
+
+.size-product{
+    margin-left: 60px !important;
+}
+
+.box-detail{
+    padding-top: 15px;
+}
+
+.row h2{
+    font-weight: 500;
+}
+
+.box-detail > span{
+    font-weight: 900;
+    margin-bottom: 20px;
+}
+
+.box-detail > p{
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.ant-select-selector{
+    width: 200px !important;
+    height: 40px !important;
+    padding: 5px 20px 0px !important;
+    color: 18px !important;
+}
+
+.ant-select-selection-placeholder{
+    font-size: 14px;
+    color: rgb(136, 134, 134) !important;
+}
+
+.span-sold-product{
+    color: rgb(144, 146, 148);
+    padding-right: 20px;
+    margin-right: 10px;
+    border-right: 1px solid rgb(144, 146, 148);
+}
+
+.button-detail-product{
+    width: 280px;
+    margin-top:40px;
+}
+
+.quantity-detail-product{
+    display: flex;
+    justify-items: center;
+}
+
+/* ------------tabs------------- */
+
+.tabs{
+    border: 1px solid rgb(230, 225, 225);
+    padding: 20px 100px;
+    margin: 60px 0px;
+}
+
+.tabs-comments{
+    padding:0px 100px 20px;
+    margin-bottom: 10px;
+}
+
+.add-comment{
+    padding:0px 100px 20px;
+}
+
+.row-comment{
+    padding: 20px ;
+    border-bottom: 1px solid rgb(248, 243, 243);
+}
+
+.avatar-comment{
+    width: 60px;
+    height: 60px;
+    border-radius: 50px;
+}
+
+.name-comment{
+    font-size: 16px;
+}
+
+.time-comment{
+    color: rgb(160, 155, 155);
+}
+ /* -------------relate-wrap------------- */
+.relate-wrap{
+     background: rgb(231, 228, 228);
+     padding: 20px;
+     text-align: center;
+     justify-content: center;
+     font-size: 18px;
+     text-transform: uppercase;
+}
+
+.relate-wrap > h3{
+    color: rgb(138, 141, 145);    
+}
+
+
+

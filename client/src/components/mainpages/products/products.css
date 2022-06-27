@@ -2,9 +2,6 @@
     margin: 5px 120px;
 }
 
-.column_product{
-}
-
 /* ----------- Product Item ----------------- */
 @import url("../utils/productItem/productItem.css");
 

@@ -42,7 +42,7 @@ button{
 @import url("./components/mainpages/products/products.css");
 
 /* ---------------- Detail Product --------------- */
-@import url("./components/mainpages/detailProduct/detailProduct.css");
+@import url("./components/mainpages/products/detailProduct/detailProduct.css");
 
 /* ------------- Login/Register ----------------- */
 @import url("./components/mainpages/auth/login.css");
@@ -54,10 +54,10 @@ button{
 @import url("./components/mainpages/history/history.css");
 
 /* ------------------ Categories ------------------ */
-@import url("./components/mainpages/categories/categories.css");
+/* @import url("./components/mainpages/categories/categories.css"); */
 
 /* ------------------- Create Product -------------- */
-@import url("./components/mainpages/createProduct/createProduct.css");
+/* @import url("./components/mainpages/createProduct/createProduct.css"); */
 
 /* ------------------- HomeSlider -------------- */
 @import url("./components/mainpages/home/homeslider/HomeSlider.css");

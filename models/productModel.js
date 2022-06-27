@@ -20,7 +20,7 @@ const productSchema = new mongoose.Schema({
     },
     description:{
         type: String,
-        required: true
+        required: false
     },
     content:{
         type: String,
@@ -34,10 +34,6 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    checked:{
-        type: Boolean,
-        default: false
-    },
     sold:{
         type: Number,
         default: 0
@@ -46,8 +42,17 @@ const productSchema = new mongoose.Schema({
         type: Number,
         default: 5
     },
+    pushlished:{
+        type: Boolean,
+        default: true
+    },
+    quantityOfProduct:{
+        type: Number,
+        default: 0
+    },
     comments:{
-        type: Object
+        type: Object,
+        default:[]
     },
 }, {
     timestamps: true //important

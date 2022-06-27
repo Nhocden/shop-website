@@ -1,3 +1,24 @@
+.create_title_product{
+    text-transform: uppercase;
+    margin:0px 40px 40px;
+    text-align: center;
+    font-size: 28px;
+}
+
+.breadcrumb{
+    margin:0px 40px 40px;
+}
+
+.category{
+    padding: 10px !important;
+}
+
+.image-all-products{
+    height: 100px;
+    width: 100px;
+}
+
+/* -------------- */
 .create_product{
     width: 100%;
     display: flex;

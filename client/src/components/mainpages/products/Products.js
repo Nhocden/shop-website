@@ -1,11 +1,15 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { GlobalState } from "../../../GlobalState";
 import ProductItem from "../utils/productItem/ProductItem";
 import Loading from "../utils/loading/Loading";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import Filters from "./Filters";
 import LoadMore from "./LoadMore";
 import { Row, Col } from "antd";
+import { Breadcrumb } from "antd";
+import Header from "../../headers/Header";
+import Footer from "../../footers/Footer";
 
 function Products() {
   const state = useContext(GlobalState);
@@ -13,8 +17,14 @@ function Products() {
   const [isAdmin] = state.userAPI.isAdmin;
   const [token] = state.token;
   const [callback, setCallback] = state.productsAPI.callback;
+  const [category, setCategory] = state.productsAPI.category;
+  const [search, setSearch] = state.productsAPI.search;
   const [loading, setLoading] = useState(false);
-  const [isCheck, setIsCheck] = useState(false);
+
+  useEffect(() => {
+    setCategory("");
+    setSearch("");
+  }, []);
 
   const handleCheck = (id) => {
     products.forEach((product) => {
@@ -46,20 +56,6 @@ function Products() {
     }
   };
 
-  const checkAll = () => {
-    products.forEach((product) => {
-      product.checked = !isCheck;
-    });
-    setProducts([...products]);
-    setIsCheck(!isCheck);
-  };
-
-  const deleteAll = () => {
-    products.forEach((product) => {
-      if (product.checked) deleteProduct(product._id, product.images.public_id);
-    });
-  };
-
   if (loading)
     return (
       <div>
@@ -67,27 +63,38 @@ function Products() {
       </div>
     );
   return (
-    <div className="products-wrap">
-      <Filters />
+    <div>
+      <Header />
+      <div className="checkout-wrap">
+        <Breadcrumb className="Breadcrumb">
+          <Breadcrumb.Item>
+            <Link to="/">Home</Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>Shop</Breadcrumb.Item>
+        </Breadcrumb>
 
-      <Row gutter={24}>
-        {products.map((product) => {
-          return (
-            <Col className="column_product" span={6}>
-              <ProductItem
-                key={product._id}
-                product={product}
-                isAdmin={isAdmin}
-                deleteProduct={deleteProduct}
-                handleCheck={handleCheck}
-              />
-            </Col>
-          );
-        })}
-      </Row>
+        <Filters />
 
-      <LoadMore />
-      {products.length === 0 && <Loading />}
+        <Row gutter={24}>
+          {products.map((product) => {
+            return (
+              <Col className="column_product" span={6} key={product._id}>
+                <ProductItem
+                  key={product._id}
+                  product={product}
+                  isAdmin={isAdmin}
+                  deleteProduct={deleteProduct}
+                  handleCheck={handleCheck}
+                />
+              </Col>
+            );
+          })}
+        </Row>
+
+        <LoadMore />
+        {products.length === 0 && <Loading />}
+      </div>
+      <Footer />
     </div>
   );
 }

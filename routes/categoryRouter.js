@@ -9,6 +9,7 @@ router.route('/category')
     .post(auth, authAdmin, categoryCtrl.createCategory)
 
 router.route('/category/:id')
+    .get(categoryCtrl.getProductsFromCategory)
     .delete(auth, authAdmin, categoryCtrl.deleteCategory)
     .put(auth, authAdmin, categoryCtrl.updateCategory)
 

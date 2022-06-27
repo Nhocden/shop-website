@@ -22,3 +22,4 @@ sketch
 
 .history/
 .env
+tmp/*
